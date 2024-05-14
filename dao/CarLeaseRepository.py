@@ -1,8 +1,6 @@
 from ICarLeaseRepository import*
-from Vehicle import Vehicle
-from Customer import Customer
-from db_prop import Db_prop
-from DBConnutil import DBConnutil
+from Entity import Customer,Vehicle
+from util import Db_prop,DBConnutil
 class Carmanagement(ICarManagementRepository):
     def __init__(self) -> None:
         self.connection=DBConnutil.get_connectionOBJ(Db_prop.getconstring())
@@ -134,3 +132,4 @@ class PaymentHandler(IPaymentHandler):
     def close(self):
         self.cursor.close()
         self.connection.close() 
+
