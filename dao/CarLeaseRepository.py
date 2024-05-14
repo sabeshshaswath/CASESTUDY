@@ -1,6 +1,8 @@
-from ICarLeaseRepository import*
-from Entity import Customer,Vehicle
-from util import Db_prop,DBConnutil
+from .ICarLeaseRepository import*
+from .Entity import Customer,Vehicle
+from .util import Db_prop,DBConnutil
+from tabulate import tabulate
+
 class Carmanagement(ICarManagementRepository):
     def __init__(self) -> None:
         self.connection=DBConnutil.get_connectionOBJ(Db_prop.getconstring())
@@ -26,7 +28,7 @@ class Carmanagement(ICarManagementRepository):
         try:
             self.cursor.execute("SELECT * FROM Vehicle WHERE status = 'available'")
             available_cars = self.cursor.fetchall()
-            return available_cars #list of tuples
+            print(tabulate(available_cars))
         except Exception as e:
             self.connection.rollback()
             raise e   
@@ -35,7 +37,7 @@ class Carmanagement(ICarManagementRepository):
         try:
             self.cursor.execute("SELECT * FROM Vehicle WHERE status = 'notAvailable'")
             available_cars = self.cursor.fetchall()
-            return available_cars #list of tuples
+            print(tabulate(available_cars)) #list of tuples
         except Exception as e:
             self.connection.rollback()
             raise e   
@@ -44,7 +46,7 @@ class Carmanagement(ICarManagementRepository):
         try:
             self.cursor.execute("SELECT * FROM Vehicle WHERE vehicleID = ?",(carID))
             available_cars = self.cursor.fetchone()
-            return available_cars #list of tuple
+            print(available_cars)#list of tuple
         except Exception as e:
             self.connection.rollback()
             raise e
@@ -68,21 +70,21 @@ class CustomerRepository(ICustomerRepository):
             raise e   
     def removeCustomer(self, customerID):
         try:
-            self.cursor.execute("DELETE FROM Customers WHERE customerID = ?", (customerID,))
+            self.cursor.execute("DELETE FROM Customer WHERE customerID = ?", (customerID,))
             self.connection.commit()
         except Exception as e:
             self.connection.rollback()
             raise e  
     def listCustomers(self):
         try:
-            self.cursor.execute("SELECT * FROM Customers")
-            return self.cursor.fetchall()
+            self.cursor.execute("SELECT * FROM Customer")
+            print(tabulate(self.cursor.fetchall()))
         except Exception as e:
             raise e
     def findCustomerById(self, customerID):
         try:
-            self.cursor.execute("SELECT * FROM Customers WHERE customerID = ?", (customerID,))
-            return self.cursor.fetchone()
+            self.cursor.execute("SELECT * FROM Customer WHERE customerID = ?", (customerID,))
+            print(self.cursor.fetchone())
         except Exception as e:
             raise e 
     def close(self):
@@ -105,13 +107,19 @@ class LeaseRepository(ILeaseRepository):
     def returnCar(self, leaseID):
         try:
             self.cursor.execute("SELECT * FROM Lease WHERE leaseID = ?", (leaseID,))
-            return self.cursor.fetchall()
+            print(tabulate(self.cursor.fetchall()))
         except Exception as e:
             raise e 
     def listActiveLeases(self):
         try:
             self.cursor.execute("SELECT * FROM Lease WHERE endDate>=GETDATE()")
-            return self.cursor.fetchall()
+            print(tabulate(self.cursor.fetchall()))
+        except Exception as e:
+            raise e
+    def listLeaseHistory(self):
+        try:
+            self.cursor.execute("SELECT * FROM Lease")
+            print(tabulate(self.cursor.fetchall()))
         except Exception as e:
             raise e
     def close(self):
@@ -132,4 +140,3 @@ class PaymentHandler(IPaymentHandler):
     def close(self):
         self.cursor.close()
         self.connection.close() 
-
