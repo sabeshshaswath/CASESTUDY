@@ -124,7 +124,7 @@ class Main:
                     leaseobj.createLease(customer_id,vehicle_id,start_date,end_date,lease_type)
                 elif choice==2:
                     id=int(input("Enter the ID of the lease: "))
-                    leaseobj.returnCar()
+                    leaseobj.returnCar(id)
                 elif choice==3:
                     leaseobj.listActiveLeases()
                 elif choice==4:
@@ -151,7 +151,7 @@ class Main:
         elif mm_choice==5:
             print("Thanks for using our application :D")
             break
-        else:s
+        else:
             print("Please enter numbers within range") 
 
 obj=Main()

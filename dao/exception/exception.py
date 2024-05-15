@@ -3,15 +3,15 @@ class CustomerManagementException(Exception):
         self.message = message
         super().__init__(self.message)
 
-class AddCustomerException(CustomerManagementException):
+class AddCustomerException(Exception):
     def __init__(self, message="Error adding customer"):
         super().__init__(message)
 
-class UpdateCustomerException(CustomerManagementException):
+class UpdateCustomerException(Exception):
     def __init__(self, message="Error updating customer information"):
         super().__init__(message)
 
-class RetrieveCustomerException(CustomerManagementException):
+class RetrieveCustomerException(Exception):
     def __init__(self, message="Error retrieving customer details"):
         super().__init__(message)
 
@@ -21,15 +21,15 @@ class CarManagementException(Exception):
         self.message = message
         super().__init__(self.message)
 
-class AddCarException(CarManagementException):
+class AddCarException(Exception):
     def __init__(self, message="Error adding car"):
         super().__init__(message)
 
-class UpdateCarException(CarManagementException):
+class UpdateCarException(Exception):
     def __init__(self, message="Error updating car availability"):
         super().__init__(message)
 
-class RetrieveCarException(CarManagementException):
+class RetrieveCarException(Exception):
     def __init__(self, message="Error retrieving car information"):
         super().__init__(message)
 
@@ -39,11 +39,11 @@ class LeaseManagementException(Exception):
         self.message = message
         super().__init__(self.message)
 
-class CreateLeaseException(LeaseManagementException):
+class CreateLeaseException(Exception):
     def __init__(self, message="Error creating lease"):
         super().__init__(message)
 
-class CalculateLeaseCostException(LeaseManagementException):
+class CalculateLeaseCostException(Exception):
     def __init__(self, message="Error calculating lease cost"):
         super().__init__(message)
 
@@ -53,14 +53,14 @@ class PaymentHandlingException(Exception):
         self.message = message
         super().__init__(self.message)
 
-class RecordPaymentException(PaymentHandlingException):
+class RecordPaymentException(Exception):
     def __init__(self, message="Error recording payment"):
         super().__init__(message)
 
-class RetrievePaymentHistoryException(PaymentHandlingException):
+class RetrievePaymentHistoryException(Exception):
     def __init__(self, message="Error retrieving payment history"):
         super().__init__(message)
 
-class CalculateRevenueException(PaymentHandlingException):
+class CalculateRevenueException(Exception):
     def __init__(self, message="Error calculating revenue"):
         super().__init__(message)
